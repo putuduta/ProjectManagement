@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="projectAMJSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="HeaderProject">
+    <Key>
+      <PropertyRef Name="HeaderProjectID" />
+    </Key>
+    <Property Name="HeaderProjectID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="int" />
+    <Property Name="ProjectID" Type="int" />
+  </EntityType>
+  <EntityType Name="MsProject">
+    <Key>
+      <PropertyRef Name="ProjectID" />
+    </Key>
+    <Property Name="ProjectID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProjectName" Type="varchar" MaxLength="255" />
+    <Property Name="ProjectDescription" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="MsUser">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Username" Type="varchar" MaxLength="255" />
+    <Property Name="UserPassword" Type="varchar" MaxLength="10" />
+    <Property Name="UserRoles" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <Association Name="FK__HeaderPro__Proje__4D94879B">
+    <End Role="MsProject" Type="Self.MsProject" Multiplicity="0..1" />
+    <End Role="HeaderProject" Type="Self.HeaderProject" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MsProject">
+        <PropertyRef Name="ProjectID" />
+      </Principal>
+      <Dependent Role="HeaderProject">
+        <PropertyRef Name="ProjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__HeaderPro__UserI__4CA06362">
+    <End Role="MsUser" Type="Self.MsUser" Multiplicity="0..1" />
+    <End Role="HeaderProject" Type="Self.HeaderProject" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MsUser">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="HeaderProject">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="sp_getOneUserAuth" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Username" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_getUserAuth" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Username" Type="varchar" Mode="In" />
+    <Parameter Name="Password" Type="varchar" Mode="In" />
+  </Function>
+  <EntityContainer Name="projectAMJSModelStoreContainer">
+    <EntitySet Name="HeaderProject" EntityType="Self.HeaderProject" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MsProject" EntityType="Self.MsProject" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MsUser" EntityType="Self.MsUser" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__HeaderPro__Proje__4D94879B" Association="Self.FK__HeaderPro__Proje__4D94879B">
+      <End Role="MsProject" EntitySet="MsProject" />
+      <End Role="HeaderProject" EntitySet="HeaderProject" />
+    </AssociationSet>
+    <AssociationSet Name="FK__HeaderPro__UserI__4CA06362" Association="Self.FK__HeaderPro__UserI__4CA06362">
+      <End Role="MsUser" EntitySet="MsUser" />
+      <End Role="HeaderProject" EntitySet="HeaderProject" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
