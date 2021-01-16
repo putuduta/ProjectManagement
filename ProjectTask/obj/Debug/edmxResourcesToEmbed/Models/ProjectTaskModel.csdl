@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="projectModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="HeaderProject">
+    <Key>
+      <PropertyRef Name="HeaderProjectID" />
+    </Key>
+    <Property Name="HeaderProjectID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="Int32" />
+    <Property Name="ProjectID" Type="Int32" />
+    <NavigationProperty Name="MsProject" Relationship="Self.FK__HeaderPro__Proje__4D94879B" FromRole="HeaderProject" ToRole="MsProject" />
+    <NavigationProperty Name="MsUser" Relationship="Self.FK__HeaderPro__UserI__4CA06362" FromRole="HeaderProject" ToRole="MsUser" />
+  </EntityType>
+  <EntityType Name="MsProject">
+    <Key>
+      <PropertyRef Name="ProjectID" />
+    </Key>
+    <Property Name="ProjectID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="ProjectDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="HeaderProjects" Relationship="Self.FK__HeaderPro__Proje__4D94879B" FromRole="MsProject" ToRole="HeaderProject" />
+  </EntityType>
+  <EntityType Name="MsUser">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Username" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="UserPassword" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="UserRoles" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="HeaderProjects" Relationship="Self.FK__HeaderPro__UserI__4CA06362" FromRole="MsUser" ToRole="HeaderProject" />
+  </EntityType>
+  <Association Name="FK__HeaderPro__Proje__4D94879B">
+    <End Role="MsProject" Type="Self.MsProject" Multiplicity="0..1" />
+    <End Role="HeaderProject" Type="Self.HeaderProject" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MsProject">
+        <PropertyRef Name="ProjectID" />
+      </Principal>
+      <Dependent Role="HeaderProject">
+        <PropertyRef Name="ProjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__HeaderPro__UserI__4CA06362">
+    <End Role="MsUser" Type="Self.MsUser" Multiplicity="0..1" />
+    <End Role="HeaderProject" Type="Self.HeaderProject" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MsUser">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="HeaderProject">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ProjectEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="HeaderProjects" EntityType="Self.HeaderProject" />
+    <EntitySet Name="MsProjects" EntityType="Self.MsProject" />
+    <EntitySet Name="MsUsers" EntityType="Self.MsUser" />
+    <AssociationSet Name="FK__HeaderPro__Proje__4D94879B" Association="Self.FK__HeaderPro__Proje__4D94879B">
+      <End Role="MsProject" EntitySet="MsProjects" />
+      <End Role="HeaderProject" EntitySet="HeaderProjects" />
+    </AssociationSet>
+    <AssociationSet Name="FK__HeaderPro__UserI__4CA06362" Association="Self.FK__HeaderPro__UserI__4CA06362">
+      <End Role="MsUser" EntitySet="MsUsers" />
+      <End Role="HeaderProject" EntitySet="HeaderProjects" />
+    </AssociationSet>
+    <FunctionImport Name="sp_getOneUserAuth" ReturnType="Collection(projectModel.sp_getOneUserAuth_Result)">
+      <Parameter Name="Username" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_getUserAuth" ReturnType="Collection(projectModel.sp_getUserAuth_Result)">
+      <Parameter Name="Username" Mode="In" Type="String" />
+      <Parameter Name="Password" Mode="In" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="sp_getOneUserAuth_Result">
+    <Property Type="Int32" Name="UserID" Nullable="false" />
+    <Property Type="String" Name="Username" Nullable="true" MaxLength="255" />
+    <Property Type="String" Name="UserPassword" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="UserRoles" Nullable="true" MaxLength="255" />
+  </ComplexType>
+  <ComplexType Name="sp_getUserAuth_Result">
+    <Property Type="Int32" Name="UserID" Nullable="false" />
+    <Property Type="String" Name="Username" Nullable="true" MaxLength="255" />
+    <Property Type="String" Name="UserPassword" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="UserRoles" Nullable="true" MaxLength="255" />
+  </ComplexType>
+</Schema>
