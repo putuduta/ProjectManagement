@@ -32,6 +32,7 @@ namespace ProjectTask.Controllers
             if (usr != null)
             {
                 Session["Username"] = usr.Username.ToString();
+                Session["UserRoles"] = usr.UserRoles.ToString();
                 status = "1";
                 return RedirectToAction("Index", "Home");
             } else 
