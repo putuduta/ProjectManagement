@@ -14,7 +14,6 @@ namespace ProjectTask.Controllers
             ViewModel viewModel = new ViewModel();
             if(Session["Username"] != null)
             {
-                
                 List<MsProject> msProjects = new List<MsProject>();
                 List<MsUser> msUsers = new List<MsUser>();
                 using (ProjectEntities db = new ProjectEntities())
@@ -34,6 +33,7 @@ namespace ProjectTask.Controllers
                         return null;
                     }
                 }
+
             } else
             {
                 return RedirectToAction("Index", "Login");
@@ -59,6 +59,7 @@ namespace ProjectTask.Controllers
             }
         }
 
+        [HttpPost]
         public ActionResult StoreAuthUser(HeaderProject headerProject)
         {
             using (ProjectEntities db = new ProjectEntities())

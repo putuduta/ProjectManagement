@@ -1,20 +1,25 @@
 ﻿@model ProjectTask.Models.ViewModel
 @{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Project Management - Home";
 }
 
 <section id="title">
     <div class="row">
-        <div class="col-lg-6">
-            <h4>Project</h4>
+        <div class="col-lg-7 mr-4">
+            <h4>Projects</h4>
         </div>
-        @if (Session["UserRoles"].ToString() == "Admin") {
-            <div class="col-lg-6 text-right">
+
+        <div class="col-lg-5 row text-right">
+            <div class="col-lg-8">
+                <input type="text" id="myInput" class="form-control" onkeyup="myFunction()" placeholder="Filter projects and teams">
+            </div>
+            <div class="col-lg-4 ml-0">
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-security">
                     New Project
                 </button>
             </div>
-        }
+        </div>
+
     </div>
 </section>
 
@@ -24,11 +29,15 @@
             <tbody>
                 @foreach (var item in Model.msProjects)
                 {
-                    <tr>
-                        <td>
+                    <tr class="tr-header">
+
+                        <td style="padding-right: 0px;">
+                            <i class="fas fa-suitcase"></i>
+                        </td>
+                        <td class="ProjectName" style="padding-right: 500px;">
                             @Html.DisplayFor(modelItem => item.ProjectName)
                         </td>
-                        <td class="text-right">
+                        <td class=" text-center" style="padding-right: 10px;">
                             <a href="#exampleModal" data-toggle="modal" data-id="@item.ProjectID"
                                data-target="#exampleModal" class="addProject"> Security</a>
                         </td>
@@ -50,7 +59,6 @@
 
                         @foreach (var item in Model.msUsers)
                         {
-
                             <div class="row custom-control custom-checkbox mb-3">
                                 <div class="ml-0 pl-0">
                                     <div class="checkbox">
@@ -61,7 +69,6 @@
                                     </div>
                                 </div>
                             </div>
-
                         }
                     </form>
                     <div class="text-right">
@@ -107,7 +114,27 @@
 @section scripts {
 
     <script>
+        function myFunction() {
+           
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("ProjectList");
+            tr = table.getElementsByTagName("tr");
 
+       
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByClassName("ProjectName")[0];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
 
         $('.group').on('change', function () {
             var totalSeen = $("input.group:checked").length;
@@ -118,7 +145,7 @@
             } 
         });
 
-        $('#formAddUser').submit(function (e) {
+        $('#formAddUser').submit((e) => {
             e.preventDefault();
             var data = $('#formAddUser').serialize();
             console.log(data);
@@ -126,7 +153,7 @@
                 type: "POST",
                 url: "Home/StoreAuthUser",
                 data: data,
-                success: function (data) {
+                success: (data) => {
                     console.log("sukses");
                     if (data.success) {
                         alert("Success Add Authorized User")
@@ -134,7 +161,7 @@
                         alert("Cannot Add Authorized User")
                     }
                 },
-                error: function (err) {
+                error: (err) => {
                     alert(err.status);
                 }
 
@@ -143,7 +170,7 @@
 
         console.log(status);
 
-        $(".addProject").click(function () {
+        $(".addProject").click(function ()  {
             var id = $(this).data('id');
             console.log(id);
             $('.modal-body #ProjectID').val(id);
@@ -156,7 +183,7 @@
                 type: "POST",
                 url: "Home/Store",
                 data: data,
-                success: function (data) {
+                success: (data) => {
                     if (data.success) {
                         alert("Success Add Project")
                     } else {
