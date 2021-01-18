@@ -4,7 +4,7 @@
 }
 
 <section id="title">
-    <div class="row">
+    <div class="row mt-5">
         <div class="col-lg-7 mr-4">
             <h4>Projects</h4>
         </div>
@@ -24,27 +24,35 @@
 </section>
 
 <section id="table">
-    <div class="table-responsive mt-3">
-        <table id="ProjectList" class="table  table-bordered display">
-            <tbody>
-                @foreach (var item in Model.msProjects)
-                {
-                    <tr class="tr-header">
+    <div class="table-responsive mt-4">
+        @if (Model.msProjects.Count() > 0)
+        {
+            <table id="ProjectList" class="table  table-bordered display">
+                <tbody>
+                    @foreach (var item in Model.msProjects)
+                    {
+                        <tr class="tr-header">
 
-                        <td style="padding-right: 0px;">
-                            <i class="fas fa-suitcase"></i>
-                        </td>
-                        <td class="ProjectName" style="padding-right: 500px;">
-                            @Html.DisplayFor(modelItem => item.ProjectName)
-                        </td>
-                        <td class=" text-center" style="padding-right: 10px;">
-                            <a href="#exampleModal" data-toggle="modal" data-id="@item.ProjectID"
-                               data-target="#exampleModal" class="addProject"> Security</a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+                            <td style="padding-right: 0px;">
+                                <i class="fas fa-suitcase"></i>
+                            </td>
+                            <td class="ProjectName" style="padding-right: 500px;">
+                                @Html.DisplayFor(modelItem => item.ProjectName)
+                            </td>
+                            <td class=" text-center" style="padding-right: 10px;">
+                                <a href="#exampleModal" data-toggle="modal" data-id="@item.ProjectID"
+                                   data-target="#exampleModal" class="addProject"> Security</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+        }
+        else
+        {
+            <h5> No data </h5>
+        }
     </div>
 </section>
 
@@ -114,6 +122,9 @@
 @section scripts {
 
     <script>
+
+       
+
         function myFunction() {
            
             var input, filter, table, tr, td, i, txtValue;

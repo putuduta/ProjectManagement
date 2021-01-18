@@ -57,14 +57,23 @@
                         </h3>
 
                     </div>
-                </section> 
+                </section>
 
                 <section id="navbar-bottom">
                     <nav class="navbar mt-0 pt-0">
                         <div class="container">
                             <div>
-                                <a class="navbar-brand mr-5 text-white" href="/Home">Projects</a>
-                                <a class="navbar-brand text-white" href="#">User Management</a>
+
+                                @if (Request.RawUrl.ToString().Equals("/Home"))
+                                {
+                                    <a class="navbar-brand mr-5 " style="color: #e6e6e6;" href="/Home">Projects</a>
+                                    <a class="navbar-brand text-white" href="#" >User Management</a>
+                                }
+                                else
+                                {
+                                    <a class="navbar-brand mr-5 text-white" href="/Home">Projects</a>
+                                    <a class="navbar-brand" style="color: #e6e6e6;" href="#">User Management</a>
+                                }
                             </div>
                         </div>
                     </nav>
