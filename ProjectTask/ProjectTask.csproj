@@ -165,6 +165,7 @@
     <Compile Include="Models\sp_getUserAuth_Result.cs">
       <DependentUpon>ProjectTaskModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
