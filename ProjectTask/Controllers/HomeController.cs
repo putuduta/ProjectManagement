@@ -130,10 +130,15 @@ namespace ProjectTask.Controllers
                     if(msUser.UserStatus == null)
                     {
                         msUser.UserStatus = "Inactive";
+                        db.MsUsers.Add(msUser);
+                        db.SaveChanges();
+                    } else
+                    {
+
+                        db.MsUsers.Add(msUser);
+                        db.SaveChanges();
                     }
 
-                    db.MsUsers.Add(msUser);
-                    db.SaveChanges();
 
                 } else 
                 {
