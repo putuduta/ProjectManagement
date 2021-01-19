@@ -17,5 +17,7 @@ namespace ProjectTask.Models
         public string Username { get; set; }
         public string UserPassword { get; set; }
         public string UserRoles { get; set; }
+        public string UserPhoto { get; set; }
+        public string UserStatus { get; set; }
     }
 }

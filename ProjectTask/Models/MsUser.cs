@@ -11,7 +11,8 @@ namespace ProjectTask.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Web;
+
     public partial class MsUser
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -24,6 +25,10 @@ namespace ProjectTask.Models
         public string Username { get; set; }
         public string UserPassword { get; set; }
         public string UserRoles { get; set; }
+        public string UserPhoto { get; set; }
+        public string UserStatus { get; set; }
+
+        public HttpPostedFileBase ImageUpload { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<HeaderProject> HeaderProjects { get; set; }

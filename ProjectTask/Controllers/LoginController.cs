@@ -10,7 +10,7 @@ namespace ProjectTask.Controllers
 {
     public class LoginController : Controller
     {
-        ProjectEntities db = new ProjectEntities();
+        TaskProjectEntities db = new TaskProjectEntities();
 
         // GET: Login
         public ActionResult Index()

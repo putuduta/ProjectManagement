@@ -6,7 +6,7 @@
 <section id="title">
     <div class="row mt-5">
         <div class="col-lg-7 mr-4">
-            <h4>Projects</h4>
+            <h4 style="color: #808080;">Projects</h4>
         </div>
 
         <div class="col-lg-5 row text-right">
@@ -27,27 +27,34 @@
     <div class="table-responsive mt-4">
         @if (Model.msProjects.Count() > 0)
         {
-            <table id="ProjectList" class="table  table-bordered display">
-                <tbody>
-                    @foreach (var item in Model.msProjects)
-                    {
-                        <tr class="tr-header">
+        <table id="ProjectList" class="table display">
+            <thead>
+                <tr style="border-style : hidden!important;">
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.msProjects)
+                {
+                    <tr class="tr-header">
 
-                            <td style="padding-right: 0px;">
-                                <i class="fas fa-suitcase"></i>
-                            </td>
-                            <td class="ProjectName" style="padding-right: 500px;">
-                                @Html.DisplayFor(modelItem => item.ProjectName)
-                            </td>
-                            <td class=" text-center" style="padding-right: 10px;">
-                                <a href="#exampleModal" data-toggle="modal" data-id="@item.ProjectID"
-                                   data-target="#exampleModal" class="addProject"> Security</a>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
+                        <td style="padding-right: 0px;">
+                            <i class="fas fa-suitcase"></i>
+                        </td>
+                        <td class="ProjectName" style="padding-right: 500px;">
+                            @Html.DisplayFor(modelItem => item.ProjectName)
+                        </td>
+                        <td class=" text-center" style="padding-right: 10px;">
+                            <a href="#exampleModal" data-toggle="modal" data-id="@item.ProjectID"
+                               data-target="#exampleModal" class="addProject"> Security</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
 
-            </table>
+        </table>
         }
         else
         {

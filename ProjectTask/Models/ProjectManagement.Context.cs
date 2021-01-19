@@ -15,10 +15,10 @@ namespace ProjectTask.Models
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class ProjectEntities : DbContext
+    public partial class TaskProjectEntities : DbContext
     {
-        public ProjectEntities()
-            : base("name=ProjectEntities")
+        public TaskProjectEntities()
+            : base("name=TaskProjectEntities")
         {
         }
     

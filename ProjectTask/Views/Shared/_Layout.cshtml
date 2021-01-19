@@ -26,6 +26,11 @@
         .header {
             background-color: #11698e;
         }
+
+        th {
+            color: #808080;
+        }
+
     </style>
 </head>
 <body>
@@ -67,12 +72,12 @@
                                 @if (Request.RawUrl.ToString().Equals("/Home"))
                                 {
                                     <a class="navbar-brand mr-5 " style="color: #e6e6e6;" href="/Home">Projects</a>
-                                    <a class="navbar-brand text-white" href="#" >User Management</a>
+                                    <a class="navbar-brand text-white" href="/Home/UserManagement" >User Management</a>
                                 }
                                 else
                                 {
                                     <a class="navbar-brand mr-5 text-white" href="/Home">Projects</a>
-                                    <a class="navbar-brand" style="color: #e6e6e6;" href="#">User Management</a>
+                                    <a class="navbar-brand" style="color: #e6e6e6;" href="/Home/UserManagement">User Management</a>
                                 }
                             </div>
                         </div>
