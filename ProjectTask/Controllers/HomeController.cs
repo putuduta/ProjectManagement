@@ -1,10 +1,13 @@
 ﻿using ProjectTask.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Services;
+using System.Web.Services;
 
 namespace ProjectTask.Controllers
 {
@@ -123,6 +126,12 @@ namespace ProjectTask.Controllers
                     fileName = msUser.Username + "_" + fileName + extension;
                     msUser.UserPhoto = fileName;
                     msUser.ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/AppFile/Images"), fileName));
+
+                    if(msUser.UserStatus == null)
+                    {
+                        msUser.UserStatus = "Inactive";
+                    }
+
                     db.MsUsers.Add(msUser);
                     db.SaveChanges();
 
@@ -132,6 +141,61 @@ namespace ProjectTask.Controllers
                 }
                 return Json(new { success = true, message = "Saved Successfully", JsonRequestBehavior.AllowGet });
             }
+        }
+
+        [HttpPost]
+        public JsonResult EditUser(MsUser msUser)
+        {
+            using (TaskProjectEntities db = new TaskProjectEntities())
+            {
+                if (msUser.ImageUpload != null)
+                {
+                    string fileName = Path.GetFileNameWithoutExtension(msUser.ImageUpload.FileName);
+                    string extension = Path.GetExtension(msUser.ImageUpload.FileName);
+                    fileName = msUser.Username + "_" + fileName + extension;
+                    msUser.UserPhoto = fileName;
+                    msUser.ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/AppFile/Images"), fileName));
+
+                    if (msUser.UserStatus == null)
+                    {
+                        msUser.UserStatus = "Inactive";
+                    }
+
+                    db.Entry(msUser).State = EntityState.Modified;
+                    db.SaveChanges();
+                } else
+                {
+                    if (msUser.UserStatus == null)
+                    {
+                        msUser.UserStatus = "Inactive";
+                    }
+
+                    db.Entry(msUser).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+                return Json(new { success = true, message = "Saved Successfully", JsonRequestBehavior.AllowGet });
+            }
+        }
+
+        [WebMethod]
+        [ScriptMethod(UseHttpGet=true)]
+        public ActionResult GetOneUser(int id)
+        {
+            MsUser newUser = new MsUser();
+            MsUser msUser = new MsUser();
+            using (TaskProjectEntities db = new TaskProjectEntities())
+            {
+                newUser = db.MsUsers.Where(x => x.UserID == id).Single();
+                msUser.UserID = newUser.UserID;
+                msUser.Username = newUser.Username;
+                msUser.UserPassword = newUser.UserPassword;
+                msUser.UserPhoto = newUser.UserPhoto;
+                msUser.UserRoles = newUser.UserRoles;
+                msUser.UserStatus = newUser.UserStatus;
+
+                return Json(msUser, JsonRequestBehavior.AllowGet);
+            }
+           
         }
     }
 }

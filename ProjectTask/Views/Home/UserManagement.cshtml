@@ -78,56 +78,41 @@
             <div class="modal-content">
                 <div class="modal-body">
                     <h3 class="mb-3">Edit</h3>
-                    <form id="formEditUser" enctype="multipart/form-data">
+                    <form id="formEditUser" enctype="multipart/form-data" method="post" onsubmit="return EditPost(this)">
                         <input type="hidden" name="UserID" id="UserID" value="" />
                         <div class="form-group row">
-                            <label class="col-sm-12 col-form-label" for="Username">Username</label>
-                            <div class="col-sm-12">
-                                <input type="text" class="form-control mt-2" id="Username" name="Username" required>
-                            </div>
+                            <label class="col-sm-12 col-form-label" for="EditUsername">Username</label>
+                            <div id="UsernameInput" class="col-sm-12"></div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-12 col-form-label" for="UserPassword">Password</label>
-                            <div class="col-sm-12">
-                                <input type="password" class="form-control mt-2" id="UserPassword" name="UserPassword" required>
-                            </div>
+                            <label class="col-sm-12 col-form-label" for="EditUserPassword">Password</label>
+                            <div id="PasswordInput" class="col-sm-12"></div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-12 col-form-label" for="UserRoles">Roles</label>
-                            <div class="col-sm-12">
-                                <select id="UserRoles" name="UserRoles" class="form-control mt-2">
-                                    <option selected>Select</option>
-                                    <option value="Admin">Admin</option>
-                                    <option value="User">User</option>
-                                </select>
-                            </div>
+                            <div id="RolesInput" class="col-sm-12"></div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-12 col-form-label" for="UserPhoto">Photos</label>
+                            <div id="PhotoInput" class="ml-3"></div>
                             <div class="col-sm-12 mt-2">
                                 <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="UserPhoto" name="UserPhoto">
-                                    <label class="custom-file-label" for="UserPhoto">Choose file</label>
+                                    <input type="file" class="custom-file-input" id="ImageUpload" name="ImageUpload">
+                                    <label class="custom-file-label" for="ImageUpload">Choose file</label>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-12 col-form-label" for="UserStatus">Status</label>
                             <div class="col-sm-12">
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="UserStatus" name="UserStatus" value="Active">
-                                    <label class="custom-control-label" for="UserStatus">Active</label>
-                                </div>
+                                <div id="StatusInput" class="custom-control custom-checkbox"></div>
                             </div>
                         </div>
                         <div class="text-left mt-4">
-                            <button type="submit" class="btn btn-primary" onclick="" data-dismiss="modal">Save and Close</button>
+                            <button type="submit" class="btn btn-primary">Save and Close</button>
                             <button type="button" class="btn btn-secondary pr-5 pl-5" data-dismiss="modal">Cancel</button>
                         </div>
                     </form>
-                    <div class="text-right">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    </div>
                 </div>
             </div>
         </div>
@@ -267,11 +252,93 @@
 
         console.log(status);
 
-        $(".addUser").click(function () {
+        $(".addUser").click(function (e) {
+            e.preventDefault();
+            $('#UsernameInput').empty();
+            $('#PasswordInput').empty();
+            $('#RolesInput').empty();
+            $('#PhotoInput').empty();
+            $('#StatusInput').empty();
+
             var id = $(this).data('id');
             console.log(id);
             $('.modal-body #UserID').val(id);
+
+            $.ajax({
+                type: "GET",
+                url: "/Home/GetOneUser",
+                data: {
+                    id: id
+                },
+                success: function (result) {
+                    $('#UsernameInput').append(`<input type="text" class="form-control mt-2" id="EditUsername" name="Username" placeholder="${result.Username}" value="${result.Username}" readonly>`);
+                    $('#PasswordInput').append(`<input type="password" class="form-control mt-2" id="EditUserPassword" name="UserPassword" value="${result.UserPassword}" required>`);
+
+                    if (result.UserRoles === "Admin") {
+                        $('#RolesInput').append(
+                            `<select id="UserRoles" name="UserRoles" class="form-control mt-2">
+                                <option  value="Admin" selected>Admin</option>
+                                <option value="User">User</option>
+                            </select>`
+                        );
+                    } else if (result.UserRoles === "User") {
+                        $('#RolesInput').append(
+                            `<select id="UserRoles" name="UserRoles" class="form-control mt-2">
+                                <option value="User" selected >User</option>
+                                <option value="Admin">Admin</option>
+                            </select>`
+                        );
+                    }
+
+                    $('#PhotoInput').append(
+                        `<img src="/AppFile/Images/${result.UserPhoto}" style="width: 15%; padding-right: 0px; max-height: 60%; " alt="No Images">
+                                <input type="text" id="UserPhoto" name="UserPhoto" value="${result.UserPhoto}" hidden>`
+                    );
+
+
+
+                    if (result.UserStatus === "Active") {
+                        $('#StatusInput').append(
+                            `<input type="checkbox" class="custom-control-input" id="UserStatus" name="UserStatus" value="Active" checked>
+                             <label class="custom-control-label" for="UserStatus">Active</label>`
+                        );
+                    } else {
+                        $('#StatusInput').append(
+                            `<input type="checkbox" class="custom-control-input" id="UserStatus" name="UserStatus" value="Active">
+                             <label class="custom-control-label" for="UserStatus">Active</label>`
+                        );
+                    }
+
+
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            })
         });
+
+        function EditPost(formData) {
+            var ajaxConfig = {
+                type: "post",
+                url: "/Home/EditUser",
+                data: new FormData(formData),
+                success: function (result) {
+                    alert("Success Edit User");
+                    location.reload();
+                },
+                error: function (err) {
+                    alert("Error Edit User");
+                    console.log(err);
+                }
+            }
+            if ($(formData).attr('enctype') == "multipart/form-data") {
+                ajaxConfig["contentType"] = false;
+                ajaxConfig["processData"] = false;
+            }
+
+            $.ajax(ajaxConfig);
+            return false;
+        }
 
     </script>
 
