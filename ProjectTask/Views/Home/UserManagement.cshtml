@@ -12,7 +12,7 @@
 
         <div class="col-lg-5 row text-right">
             <div class="col-lg-8">
-                <input type="text" id="myInput" class="form-control" onkeyup="myFunction()" placeholder="Filter users">
+                <input type="text" id="mySearch" class="form-control" onkeyup="mySearch()" placeholder="Filter users">
             </div>
             <div class="col-lg-4 ml-0">
                 <button type="button" class="btn btn-primary pr-4 pl-4" data-toggle="modal" data-target="#add-user">
@@ -24,7 +24,7 @@
     </div>
 </section>
 
-<section id="table">
+<section id="tableList">
     <div class="table-responsive mt-4">
         @if (Model.msUsers.Count() > 0)
         {
@@ -43,8 +43,8 @@
                     {
                         <tr class="tr-header">
 
-                            <td  style="padding-right: 0px;">
-                                <img src="~/AppFile/Images/@item.UserPhoto" style="max-width: 20%; padding-right: 0px; height: 5%; " alt="No Images">
+                            <td style="padding-right: 0px;">
+                                <img src="~/AppFile/Images/@item.UserPhoto" style="width: 100px; padding-right: 0px; height: 120px; " alt="No Images">
                             </td>
                             <td class="list pr-5 text-left">
                                 @Html.DisplayFor(modelItem => item.Username)
@@ -55,9 +55,9 @@
                             <td class="list pr-5 pl-5">
                                 @Html.DisplayFor(modelItem => item.UserStatus)
                             </td>
-                            <td class=" text-center pr-5 pl-5" >
-                                <a href="#exampleModal" data-toggle="modal" data-id="@item.UserID"
-                                   data-target="#exampleModal" class="addUser"> Edit</a>
+                            <td class=" text-center pr-5 pl-5">
+                                <a href="#exampleEdit" data-toggle="modal" data-id="@item.UserID"
+                                   data-target="#exampleEdit" class="addUser"> Edit</a>
                             </td>
                         </tr>
                     }
@@ -73,7 +73,7 @@
 </section>
 
 <section id="modalEditUser">
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="exampleEdit" tabindex="-1" role="dialog" aria-labelledby="exampleEditLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-body">
@@ -95,7 +95,7 @@
                         <div class="form-group row">
                             <label class="col-sm-12 col-form-label" for="UserPhoto">Photos</label>
                             <div id="PhotoInput" class="ml-3"></div>
-                            <div class="col-sm-12 mt-2">
+                            <div class="col-sm-12 mt-3">
                                 <div class="custom-file">
                                     <input type="file" class="custom-file-input fileUpload-1" id="ImageUpload" name="ImageUpload">
                                     <label class="custom-file-label" for="ImageUpload">Choose file</label>
@@ -180,166 +180,8 @@
 
 @section scripts {
 
-    <script>
-        
-        $('#formAddUser').validate({
-            rules: {
-                Username: {
-                    required: true
-                },
-                UserPassword: {
-                    required: true,
-                    alphanumeric: true
-                },
-                ImageUpload: {
-                    required: true,
-                    extension: "jpeg|gif|png"
-                }
-            }
-        });
 
-
-        $("#myInput").on("keyup", function () {
-            var value = $(this).val().toLowerCase();
-            $("#List tr").filter(function () {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-        });
-
-
-
-
-
-        $('.fileUpload-2').on('change', function () {
-            //get the file name
-            var fileName = $(this).val();
-            //replace the "Choose a file" label
-            $(this).next('.custom-file-label').html(fileName);
-        })
-
-        $('.fileUpload-1').on('change', function () {
-            //get the file name
-            var fileName = $(this).val();
-            //replace the "Choose a file" label
-            $(this).next('.custom-file-label').html(fileName);
-        })
-
-
-        function AjaxPost(formData) {
-            var ajaxConfig = {
-                type: "post",
-                url: "/Home/AddUser",
-                data: new FormData(formData),
-                success: function (result) {
-                    alert("Success Add User");
-                    location.reload();
-                },
-                error: function (err) {
-                    alert("Error Add User");
-                    console.log(err);
-                }
-            }
-            if ($(formData).attr('enctype') == "multipart/form-data") {
-                ajaxConfig["contentType"] = false;
-                ajaxConfig["processData"] = false;
-            }
-
-            $.ajax(ajaxConfig);
-            return false;
-        }
-
-        console.log(status);
-
-        $(".addUser").click(function (e) {
-            e.preventDefault();
-            $('#UsernameInput').empty();
-            $('#PasswordInput').empty();
-            $('#RolesInput').empty();
-            $('#PhotoInput').empty();
-            $('#StatusInput').empty();
-
-            var id = $(this).data('id');
-            console.log(id);
-            $('.modal-body #UserID').val(id);
-
-            $.ajax({
-                type: "GET",
-                url: "/Home/GetOneUser",
-                data: {
-                    id: id
-                },
-                success: function (result) {
-                    $('#UsernameInput').append(`<input type="text" class="form-control mt-2" id="EditUsername" name="Username" placeholder="${result.Username}" value="${result.Username}" readonly>`);
-                    $('#PasswordInput').append(`<input type="password" class="form-control mt-2" id="EditUserPassword" name="UserPassword" value="${result.UserPassword}" required>`);
-
-                    if (result.UserRoles === "Admin") {
-                        $('#RolesInput').append(
-                            `<select id="UserRoles" name="UserRoles" class="form-control mt-2">
-                                <option  value="Admin" selected>Admin</option>
-                                <option value="User">User</option>
-                            </select>`
-                        );
-                    } else if (result.UserRoles === "User") {
-                        $('#RolesInput').append(
-                            `<select id="UserRoles" name="UserRoles" class="form-control mt-2">
-                                <option value="User" selected >User</option>
-                                <option value="Admin">Admin</option>
-                            </select>`
-                        );
-                    }
-
-                    $('#PhotoInput').append(
-                        `<img src="/AppFile/Images/${result.UserPhoto}" style="width: 15%; padding-right: 0px; max-height: 60%; " alt="No Images">
-                                <input type="text" id="UserPhoto" name="UserPhoto" value="${result.UserPhoto}" hidden>`
-                    );
-
-
-
-                    if (result.UserStatus === "Active") {
-                        $('#StatusInput').append(
-                            `<input type="checkbox" class="custom-control-input" id="UserStatus" name="UserStatus" value="Active" checked>
-                             <label class="custom-control-label" for="UserStatus">Active</label>`
-                        );
-                    } else {
-                        $('#StatusInput').append(
-                            `<input type="checkbox" class="custom-control-input" id="UserStatus" name="UserStatus" value="Active">
-                             <label class="custom-control-label" for="UserStatus">Active</label>`
-                        );
-                    }
-
-
-                },
-                error: function (err) {
-                    console.log(err);
-                }
-            })
-        });
-
-        function EditPost(formData) {
-            var ajaxConfig = {
-                type: "post",
-                url: "/Home/EditUser",
-                data: new FormData(formData),
-                success: function (result) {
-                    alert("Success Edit User");
-                    location.reload();
-                },
-                error: function (err) {
-                    alert("Error Edit User");
-                    console.log(err);
-                }
-            }
-            if ($(formData).attr('enctype') == "multipart/form-data") {
-                ajaxConfig["contentType"] = false;
-                ajaxConfig["processData"] = false;
-            }
-
-            $.ajax(ajaxConfig);
-            return false;
-        }
-
-
-    </script>
+    <script class="user-script" src="~/Scripts/UserManagement.js"></script>
 
 
 }

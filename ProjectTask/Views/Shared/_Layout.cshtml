@@ -20,7 +20,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
    
 
-
+    <script>
+        $(document).ready(function () {
+            if (window.location.pathname == "/Home") {
+                $('#link1').removeClass('text-white');
+                $('#link2').addClass('text-white');
+            } else {
+                $('#link1').addClass('text-white');
+                $('#link2').removeClass('text-white');
+            }
+        });
+    </script>
 
     <style>
         .header {
@@ -68,17 +78,8 @@
                     <nav class="navbar mt-0 pt-0">
                         <div class="container">
                             <div>
-
-                                @if (Request.RawUrl.ToString().Equals("/Home"))
-                                {
-                                    <a class="navbar-brand mr-5 " style="color: #e6e6e6;" href="/Home">Projects</a>
-                                    <a class="navbar-brand text-white" href="/Home/UserManagement" >User Management</a>
-                                }
-                                else
-                                {
-                                    <a class="navbar-brand mr-5 text-white" href="/Home">Projects</a>
-                                    <a class="navbar-brand" style="color: #e6e6e6;" href="/Home/UserManagement">User Management</a>
-                                }
+                                <button id="link1" class="link navbar-brand mr-5" style="background: none; border: none; color: #e6e6e6;" value="/Home">Projects</button>
+                                <button id="link2" class="link navbar-brand mr-5" style="background: none; border: none; color: #e6e6e6;" value="/Home/UserManagement">User Management</button>
                             </div>
                         </div>
                     </nav>

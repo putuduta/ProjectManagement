@@ -27,34 +27,34 @@
     <div class="table-responsive mt-4">
         @if (Model.msProjects.Count() > 0)
         {
-        <table id="ProjectList" class="table display">
-            <thead>
-                <tr style="border-style : hidden!important;">
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.msProjects)
-                {
-                    <tr class="tr-header">
-
-                        <td style="padding-right: 0px;">
-                            <i class="fas fa-suitcase"></i>
-                        </td>
-                        <td class="ProjectName" style="padding-right: 500px;">
-                            @Html.DisplayFor(modelItem => item.ProjectName)
-                        </td>
-                        <td class=" text-center" style="padding-right: 10px;">
-                            <a href="#exampleModal" data-toggle="modal" data-id="@item.ProjectID"
-                               data-target="#exampleModal" class="addProject"> Security</a>
-                        </td>
+            <table id="ProjectList" class="table display">
+                <thead>
+                    <tr style="border-style : hidden!important;">
+                        <th></th>
+                        <th></th>
+                        <th></th>
                     </tr>
-                }
-            </tbody>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.msProjects)
+                    {
+                        <tr class="tr-header">
 
-        </table>
+                            <td style="padding-right: 0px;">
+                                <i class="fas fa-suitcase"></i>
+                            </td>
+                            <td class="ProjectName" style="padding-right: 500px;">
+                                @Html.DisplayFor(modelItem => item.ProjectName)
+                            </td>
+                            <td class=" text-center" style="padding-right: 10px;">
+                                <a href="#exampleModal" data-toggle="modal" data-id="@item.ProjectID"
+                                   data-target="#exampleModal" class="addProject"> Security</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
         }
         else
         {
@@ -69,7 +69,7 @@
             <div class="modal-content">
                 <div class="modal-body">
                     <h5 class="mb-3">Add Authorized User</h5>
-                    <form id="formAddUser">
+                    <form id="formAddSecur">
                         <input type="hidden" name="ProjectID" id="ProjectID" value="" />
 
                         @foreach (var item in Model.msUsers)
@@ -128,100 +128,8 @@
 
 @section scripts {
 
-    <script>
+        <script class="index-script" src="~/Scripts/Index.js"></script>
 
-       
-
-        function myFunction() {
-           
-            var input, filter, table, tr, td, i, txtValue;
-            input = document.getElementById("myInput");
-            filter = input.value.toUpperCase();
-            table = document.getElementById("ProjectList");
-            tr = table.getElementsByTagName("tr");
-
-       
-            for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByClassName("ProjectName")[0];
-                if (td) {
-                    txtValue = td.textContent || td.innerText;
-                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                        tr[i].style.display = "";
-                    } else {
-                        tr[i].style.display = "none";
-                    }
-                }
-            }
-        }
-
-        $('.group').on('change', function () {
-            var totalSeen = $("input.group:checked").length;
-            if ($(this).prop("checked")) {
-                var id = $(this).val();
-                $("#formAddUser").submit();
-
-            } 
-        });
-
-        $('#formAddUser').submit((e) => {
-            e.preventDefault();
-            var data = $('#formAddUser').serialize();
-            console.log(data);
-            $.ajax({
-                type: "POST",
-                url: "Home/StoreAuthUser",
-                data: data,
-                success: (data) => {
-                    console.log("sukses");
-                    if (data.success) {
-                        alert("Success Add Authorized User")
-                    } else {
-                        alert("Cannot Add Authorized User")
-                    }
-                },
-                error: (err) => {
-                    alert(err.status);
-                }
-
-            });
-        });
-
-        console.log(status);
-
-        $(".addProject").click(function ()  {
-            var id = $(this).data('id');
-            console.log(id);
-            $('.modal-body #ProjectID').val(id);
-        });
- 
-
-        function AddProject() {
-            var data = $('#formAddProject').serialize();
-            $.ajax({
-                type: "POST",
-                url: "Home/Store",
-                data: data,
-                success: (data) => {
-                    if (data.success) {
-                        alert("Success Add Project")
-                    } else {
-                        alert("Cannot Add Project")
-                    }
-                }
-
-            });
-        }
-
-
-        $('#formAddProject').validate({
-            rules: {
-                ProjectName: {
-                    required: true,
-                }
-            }
-        });
-
-    </script>
-
+    
 
 }
