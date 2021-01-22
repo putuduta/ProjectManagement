@@ -49,6 +49,7 @@ function AjaxPost(formData) {
         success: function (result) {
             alert("Success Add User");
             $('#tableList').load('/Home/UserManagement #tableList');
+            $("#add-user .closeModal").click();
         },
         error: function (err) {
             alert("Error Add User");
@@ -106,7 +107,7 @@ $(".addUser").click(function () {
             }
 
             $('#PhotoInput').append(
-                `<img src="/AppFile/Images/${result.UserPhoto}" style="width: 100px; padding-right: 0px; height: 120px; " alt="No Images">
+                `<img src="/AppFile/Images/${result.UserPhoto}" class="rounded-circle img-size" alt="No Images">
                                         <input type="text" id="UserPhoto" name="UserPhoto" value="${result.UserPhoto}" hidden>`
             );
 
@@ -139,7 +140,9 @@ function EditPost(formData) {
         data: new FormData(formData),
         success: function (result) {
             alert("Success Edit User");
+            
             $('#tableList').load('/Home/UserManagement #tableList');
+            $("#exampleEdit .closeModal").click();
         },
         error: function (err) {
             alert("Error Edit User");

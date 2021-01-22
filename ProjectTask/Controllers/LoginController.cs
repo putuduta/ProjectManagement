@@ -31,6 +31,7 @@ namespace ProjectTask.Controllers
 
             if (usr != null)
             {
+                Session["UserID"] = usr.UserID.ToString();
                 Session["Username"] = usr.Username.ToString();
                 Session["UserRoles"] = usr.UserRoles.ToString();
                 status = "1";

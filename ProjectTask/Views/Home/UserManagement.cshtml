@@ -44,7 +44,7 @@
                         <tr class="tr-header">
 
                             <td style="padding-right: 0px;">
-                                <img src="~/AppFile/Images/@item.UserPhoto" style="width: 100px; padding-right: 0px; height: 120px; " alt="No Images">
+                                <img src="~/AppFile/Images/@item.UserPhoto" class="rounded-circle img-size" alt="No Images">
                             </td>
                             <td class="list pr-5 text-left">
                                 @Html.DisplayFor(modelItem => item.Username)
@@ -110,7 +110,7 @@
                         </div>
                         <div class="text-left mt-4">
                             <button type="submit" class="btn btn-primary">Save and Close</button>
-                            <button type="button" class="btn btn-secondary pr-5 pl-5" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-secondary pr-5 pl-5 closeModal" data-dismiss="modal">Cancel</button>
                         </div>
                     </form>
                 </div>
@@ -169,7 +169,7 @@
                         </div>
                         <div class="text-left mt-3">
                             <button type="submit" class="btn btn-primary">Save and Close</button>
-                            <button type="button" class="btn btn-secondary pr-5 pl-5" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-secondary pr-5 pl-5 closeModal" data-dismiss="modal">Cancel</button>
                         </div>
                     </form>
                 </div>
