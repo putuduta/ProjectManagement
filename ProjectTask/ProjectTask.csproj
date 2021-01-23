@@ -132,40 +132,47 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\UserPageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\HeaderProject.cs">
-      <DependentUpon>ProjectManagement.tt</DependentUpon>
+      <DependentUpon>ProjectTask.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MsProject.cs">
-      <DependentUpon>ProjectManagement.tt</DependentUpon>
+      <DependentUpon>ProjectTask.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MsUser.cs">
-      <DependentUpon>ProjectManagement.tt</DependentUpon>
+      <DependentUpon>ProjectTask.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ProjectManagement.Context.cs">
+    <Compile Include="Models\ProjectTask.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ProjectManagement.Context.tt</DependentUpon>
+      <DependentUpon>ProjectTask.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ProjectManagement.cs">
+    <Compile Include="Models\ProjectTask.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ProjectManagement.tt</DependentUpon>
+      <DependentUpon>ProjectTask.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ProjectManagement.Designer.cs">
+    <Compile Include="Models\ProjectTask.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ProjectManagement.edmx</DependentUpon>
+      <DependentUpon>ProjectTask.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_getOneUserAuth_Result.cs">
-      <DependentUpon>ProjectManagement.tt</DependentUpon>
+      <DependentUpon>ProjectTask.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_getUserAuth_Result.cs">
-      <DependentUpon>ProjectManagement.tt</DependentUpon>
+      <DependentUpon>ProjectTask.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ViewModel.cs" />
+    <Compile Include="Models\WorkItem.cs">
+      <DependentUpon>ProjectTask.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WorkItemTask.cs">
+      <DependentUpon>ProjectTask.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -178,15 +185,15 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\ProjectManagement.Context.tt">
+    <Content Include="Models\ProjectTask.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ProjectManagement.edmx</DependentUpon>
-      <LastGenOutput>ProjectManagement.Context.cs</LastGenOutput>
+      <DependentUpon>ProjectTask.edmx</DependentUpon>
+      <LastGenOutput>ProjectTask.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\ProjectManagement.tt">
+    <Content Include="Models\ProjectTask.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ProjectManagement.edmx</DependentUpon>
-      <LastGenOutput>ProjectManagement.cs</LastGenOutput>
+      <DependentUpon>ProjectTask.edmx</DependentUpon>
+      <LastGenOutput>ProjectTask.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -212,12 +219,12 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
-    <EntityDeploy Include="Models\ProjectManagement.edmx">
+    <EntityDeploy Include="Models\ProjectTask.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ProjectManagement.Designer.cs</LastGenOutput>
+      <LastGenOutput>ProjectTask.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\ProjectManagement.edmx.diagram">
-      <DependentUpon>ProjectManagement.edmx</DependentUpon>
+    <Content Include="Models\ProjectTask.edmx.diagram">
+      <DependentUpon>ProjectTask.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.5.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.5.1.js" />
@@ -328,6 +335,7 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Home\UserManagement.cshtml" />
+    <Content Include="Views\UserPage\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AppFile\Images\" />

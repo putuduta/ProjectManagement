@@ -19,6 +19,7 @@ namespace ProjectTask.Models
         public MsUser()
         {
             this.HeaderProjects = new HashSet<HeaderProject>();
+            this.WorkItemTasks = new HashSet<WorkItemTask>();
         }
     
         public int UserID { get; set; }
@@ -29,8 +30,10 @@ namespace ProjectTask.Models
         public string UserStatus { get; set; }
 
         public HttpPostedFileBase ImageUpload { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<HeaderProject> HeaderProjects { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<WorkItemTask> WorkItemTasks { get; set; }
     }
 }

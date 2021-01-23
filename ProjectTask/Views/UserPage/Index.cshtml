@@ -1,0 +1,21 @@
+﻿@model ProjectTask.Models.MsProject
+
+@{
+    ViewBag.Title = "User Management";
+}
+
+<section id="title">
+    <div class="row mt-5">
+        <div class="col-lg-7 mr-4">
+            @if (Model != null)
+            {
+                <h4 style="color: #808080;">Baklog Items - @Model.ProjectName</h4>
+            }
+            else
+            {
+                <h4 style="color: #808080;">Baklog Items - No Projects</h4>
+            }
+        </div>
+    </div>
+</section>
+

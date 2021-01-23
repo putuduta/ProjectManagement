@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3ea04238072b403586e5fe9f4bd96b41" Name="Diagram1">
+        <EntityTypeShape EntityType="ProjectTaskModel.HeaderProject" Width="1.5" PointX="3" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectTaskModel.MsProject" Width="1.5" PointX="0.75" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectTaskModel.MsUser" Width="1.5" PointX="0.75" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectTaskModel.WorkItem" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectTaskModel.WorkItemTask" Width="1.5" PointX="5.25" PointY="5.25" IsExpanded="true" />
+        <AssociationConnector Association="ProjectTaskModel.FK__HeaderPro__Proje__4D94879B" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectTaskModel.FK__HeaderPro__UserI__4CA06362" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectTaskModel.FK__WorkItems__Proje__5CD6CB2B" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectTaskModel.FK__WorkItemT__ItemT__5FB337D6" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectTaskModel.FK__WorkItemT__ItemW__60A75C0F" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

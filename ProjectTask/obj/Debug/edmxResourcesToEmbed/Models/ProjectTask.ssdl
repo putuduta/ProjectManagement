@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ProjectTaskModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="HeaderProject">
+    <Key>
+      <PropertyRef Name="HeaderProjectID" />
+    </Key>
+    <Property Name="HeaderProjectID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="int" />
+    <Property Name="ProjectID" Type="int" />
+  </EntityType>
+  <EntityType Name="MsProject">
+    <Key>
+      <PropertyRef Name="ProjectID" />
+    </Key>
+    <Property Name="ProjectID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProjectName" Type="varchar" MaxLength="255" />
+    <Property Name="ProjectDescription" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="MsUser">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Username" Type="varchar" MaxLength="255" />
+    <Property Name="UserPassword" Type="varchar" MaxLength="10" />
+    <Property Name="UserRoles" Type="varchar" MaxLength="255" />
+    <Property Name="UserPhoto" Type="varchar" MaxLength="255" />
+    <Property Name="UserStatus" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="WorkItems">
+    <Key>
+      <PropertyRef Name="WorkItemID" />
+    </Key>
+    <Property Name="WorkItemID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProjectID" Type="int" />
+    <Property Name="WorkItemName" Type="varchar" MaxLength="255" />
+    <Property Name="WorkItemState" Type="varchar" MaxLength="255" />
+    <Property Name="WorkItemStartDate" Type="date" />
+    <Property Name="WorkItemEndDate" Type="date" />
+  </EntityType>
+  <EntityType Name="WorkItemTask">
+    <Key>
+      <PropertyRef Name="ItemTaskID" />
+    </Key>
+    <Property Name="ItemTaskID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ItemTaskUserID" Type="int" />
+    <Property Name="ItemWorkID" Type="int" />
+    <Property Name="ItemTaskName" Type="varchar" MaxLength="255" />
+    <Property Name="ItemTaskState" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <Association Name="FK__HeaderPro__Proje__4D94879B">
+    <End Role="MsProject" Type="Self.MsProject" Multiplicity="0..1" />
+    <End Role="HeaderProject" Type="Self.HeaderProject" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MsProject">
+        <PropertyRef Name="ProjectID" />
+      </Principal>
+      <Dependent Role="HeaderProject">
+        <PropertyRef Name="ProjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__HeaderPro__UserI__4CA06362">
+    <End Role="MsUser" Type="Self.MsUser" Multiplicity="0..1" />
+    <End Role="HeaderProject" Type="Self.HeaderProject" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MsUser">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="HeaderProject">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__WorkItems__Proje__5CD6CB2B">
+    <End Role="MsProject" Type="Self.MsProject" Multiplicity="0..1" />
+    <End Role="WorkItems" Type="Self.WorkItems" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MsProject">
+        <PropertyRef Name="ProjectID" />
+      </Principal>
+      <Dependent Role="WorkItems">
+        <PropertyRef Name="ProjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__WorkItemT__ItemT__5FB337D6">
+    <End Role="MsUser" Type="Self.MsUser" Multiplicity="0..1" />
+    <End Role="WorkItemTask" Type="Self.WorkItemTask" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MsUser">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="WorkItemTask">
+        <PropertyRef Name="ItemTaskUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__WorkItemT__ItemW__60A75C0F">
+    <End Role="WorkItems" Type="Self.WorkItems" Multiplicity="0..1" />
+    <End Role="WorkItemTask" Type="Self.WorkItemTask" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WorkItems">
+        <PropertyRef Name="WorkItemID" />
+      </Principal>
+      <Dependent Role="WorkItemTask">
+        <PropertyRef Name="ItemWorkID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="sp_getOneUserAuth" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Username" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_getUserAuth" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Username" Type="varchar" Mode="In" />
+    <Parameter Name="Password" Type="varchar" Mode="In" />
+  </Function>
+  <EntityContainer Name="ProjectTaskModelStoreContainer">
+    <EntitySet Name="HeaderProject" EntityType="Self.HeaderProject" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MsProject" EntityType="Self.MsProject" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MsUser" EntityType="Self.MsUser" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WorkItems" EntityType="Self.WorkItems" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WorkItemTask" EntityType="Self.WorkItemTask" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__HeaderPro__Proje__4D94879B" Association="Self.FK__HeaderPro__Proje__4D94879B">
+      <End Role="MsProject" EntitySet="MsProject" />
+      <End Role="HeaderProject" EntitySet="HeaderProject" />
+    </AssociationSet>
+    <AssociationSet Name="FK__HeaderPro__UserI__4CA06362" Association="Self.FK__HeaderPro__UserI__4CA06362">
+      <End Role="MsUser" EntitySet="MsUser" />
+      <End Role="HeaderProject" EntitySet="HeaderProject" />
+    </AssociationSet>
+    <AssociationSet Name="FK__WorkItems__Proje__5CD6CB2B" Association="Self.FK__WorkItems__Proje__5CD6CB2B">
+      <End Role="MsProject" EntitySet="MsProject" />
+      <End Role="WorkItems" EntitySet="WorkItems" />
+    </AssociationSet>
+    <AssociationSet Name="FK__WorkItemT__ItemT__5FB337D6" Association="Self.FK__WorkItemT__ItemT__5FB337D6">
+      <End Role="MsUser" EntitySet="MsUser" />
+      <End Role="WorkItemTask" EntitySet="WorkItemTask" />
+    </AssociationSet>
+    <AssociationSet Name="FK__WorkItemT__ItemW__60A75C0F" Association="Self.FK__WorkItemT__ItemW__60A75C0F">
+      <End Role="WorkItems" EntitySet="WorkItems" />
+      <End Role="WorkItemTask" EntitySet="WorkItemTask" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

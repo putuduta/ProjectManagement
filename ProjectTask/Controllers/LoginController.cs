@@ -10,7 +10,7 @@ namespace ProjectTask.Controllers
 {
     public class LoginController : Controller
     {
-        TaskProjectEntities db = new TaskProjectEntities();
+        ProjectTaskEntities db = new ProjectTaskEntities();
 
         // GET: Login
         public ActionResult Index()
@@ -40,7 +40,7 @@ namespace ProjectTask.Controllers
                     return RedirectToAction("Index", "Home");
                 } else
                 {
-                    return RedirectToAction("Index", "login");
+                    return RedirectToAction("Index", "UserPage");
                 }
             } else 
             {

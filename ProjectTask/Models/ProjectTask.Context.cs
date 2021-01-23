@@ -15,10 +15,10 @@ namespace ProjectTask.Models
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class TaskProjectEntities : DbContext
+    public partial class ProjectTaskEntities : DbContext
     {
-        public TaskProjectEntities()
-            : base("name=TaskProjectEntities")
+        public ProjectTaskEntities()
+            : base("name=ProjectTaskEntities")
         {
         }
     
@@ -30,6 +30,8 @@ namespace ProjectTask.Models
         public virtual DbSet<HeaderProject> HeaderProjects { get; set; }
         public virtual DbSet<MsProject> MsProjects { get; set; }
         public virtual DbSet<MsUser> MsUsers { get; set; }
+        public virtual DbSet<WorkItem> WorkItems { get; set; }
+        public virtual DbSet<WorkItemTask> WorkItemTasks { get; set; }
     
         public virtual ObjectResult<sp_getOneUserAuth_Result> sp_getOneUserAuth(string username)
         {

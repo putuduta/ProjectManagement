@@ -12,22 +12,23 @@ namespace ProjectTask.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class MsProject
+    public partial class WorkItem
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public MsProject()
+        public WorkItem()
         {
-            this.HeaderProjects = new HashSet<HeaderProject>();
-            this.WorkItems = new HashSet<WorkItem>();
+            this.WorkItemTasks = new HashSet<WorkItemTask>();
         }
     
-        public int ProjectID { get; set; }
-        public string ProjectName { get; set; }
-        public string ProjectDescription { get; set; }
+        public int WorkItemID { get; set; }
+        public Nullable<int> ProjectID { get; set; }
+        public string WorkItemName { get; set; }
+        public string WorkItemState { get; set; }
+        public Nullable<System.DateTime> WorkItemStartDate { get; set; }
+        public Nullable<System.DateTime> WorkItemEndDate { get; set; }
     
+        public virtual MsProject MsProject { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<HeaderProject> HeaderProjects { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<WorkItem> WorkItems { get; set; }
+        public virtual ICollection<WorkItemTask> WorkItemTasks { get; set; }
     }
 }
