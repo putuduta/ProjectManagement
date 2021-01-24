@@ -103,8 +103,8 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-body">
-                    <h3 class="mb-3">Edit</h3>
-                    <p>Work Items</p>
+                    <h3 class="mb-3">Edit Iteration</h3>
+                    <div id="itTitle"></div>
                     <form id="formAddWorkItem" enctype="multipart/form-data" method="post" onsubmit="return EditWork(this)">
                         <input type="hidden" name="WorkItemID" id="WorkItemID" value="" />
 
@@ -112,7 +112,7 @@
                         <div id="StateInput"></div>
 
                         <div class="form-group row">
-                            <label class="col-sm-12 col-form-label" for="WorkItemName">Title</label>
+                            <label class="col-sm-12 col-form-label" for="WorkItemName">Iteration Name</label>
                             <div id="NameInput" class="col-sm-12"></div>
                         </div>
 
@@ -128,7 +128,7 @@
                                 <input type='date' id="WorkItemEndDate" name="WorkItemEndDate" class="form-control" />
                             </div>
                         </div>
-                        <div class="text-left mt-4">
+                        <div class="text-right mt-4">
                             <button type="submit" class="btn btn-primary">Save and Close</button>
                             <button type="button" class="btn btn-secondary pr-5 pl-5 closeModal" data-dismiss="modal">Cancel</button>
                         </div>

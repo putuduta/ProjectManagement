@@ -127,7 +127,7 @@ CREATE TABLE WorkItemTask
 
 )
 
-INSERT INTO WorkItems 
+INSERT INTO WorkItems
 VALUES (
     1,
     'Sprint 1',
@@ -145,3 +145,14 @@ VALUES
         '2020-01-24',
         '2020-01-26'
 )
+
+SELECT *
+FROM WorkItems
+
+UPDATE WorkItems
+    SET ProjectID = 1
+WHERE WorkItemID = 2
+
+DELETE
+FROM WorkItems
+WHERE WorkItemID = 8

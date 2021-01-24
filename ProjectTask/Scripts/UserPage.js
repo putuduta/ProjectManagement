@@ -48,7 +48,10 @@ function parseJsonDate(jsonDate) {
 
 $(".editWorkItems").click(function () {
 
+    $('#itTitle').empty();
     $('#NameInput').empty();
+    $('#ProjectInput').empty();
+    $('#StateInput').empty();
 
     var id = $(this).data('id');
     console.log("masuk");
@@ -62,6 +65,7 @@ $(".editWorkItems").click(function () {
             id: id
         },
         success: function (result) {
+            $('#itTitle').append(`<h4 class="text-primary">${result.WorkItemName}</h4>`);
             $('#NameInput').append(`<input type="text" class="form-control mt-2" id="WorkItemName" name="WorkItemName"
                         placeholder="${result.WorkItemName}" value="${result.WorkItemName}" readonly>`);
             $('#ProjectInput').append(`<input type="hidden" class="form-control mt-2" id="ProjectID" name="ProjectID"
