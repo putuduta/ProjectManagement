@@ -1,15 +1,31 @@
-﻿@model ProjectTask.Models.MsProject
+﻿@model ProjectTask.Models.UserViewModel
 
 @{
-    ViewBag.Title = "User Management";
+    ViewBag.Title = "User Management - Home";
 }
+
+<style>
+    .list-group-item.active {
+        color: blue;
+        background-color: white;
+        border-color: none;
+    }
+
+    .list-group-item {
+        border: none;
+    }
+
+    .list-group-item-action {
+        color: blue;
+    }
+</style>
 
 <section id="title">
     <div class="row mt-5">
         <div class="col-lg-7 mr-4">
-            @if (Model != null)
+            @if (Model.msProject != null)
             {
-                <h4 style="color: #808080;">Baklog Items - @Model.ProjectName</h4>
+                <h4 style="color: #808080;">Baklog Items - @Model.msProject.ProjectName</h4>
             }
             else
             {
@@ -19,3 +35,150 @@
     </div>
 </section>
 
+<section id="tableList">
+
+    @if (Model.workItems.Count() > 0)
+    {
+
+        <div class="row mt-3">
+            <div class="col-2">
+                <div class="list-group" id="list-tab" role="tablist">
+                    @{
+                        var count = 0;
+                        foreach (var item in Model.workItems)
+                        {
+                            <a class="list-group-item list-group-item-action workName class-@count" id="list-@item.WorkItemID-list" data-toggle="list"
+                               href="#list-@item.WorkItemID" role="tab" aria-controls="@item.WorkItemID"
+                               data-id="@item.WorkItemID">@item.WorkItemName</a>
+
+                            count++;
+                        }
+                    }
+                </div>
+            </div>
+            <div class="col-10">
+                <div class="tab-content" id="nav-tabContent">
+                    @{
+                        var otherCount = 0;
+                        foreach (var item in Model.workItems)
+                        {
+                            <div class="tab-pane fade show  class-@otherCount" id="list-@item.WorkItemID" role="tabpanel"
+                                 aria-labelledby="list-@item.WorkItemID-list">
+                                <div class="row">
+                                    <div class="text-left col-8">
+                                        <h4 style="color: blue;">@item.WorkItemName</h4>
+                                        <a href="#exampleAdd" data-toggle="modal" data-id="@Model.msProject.ProjectID"
+                                           data-target="#exampleAdd" class="addWorkItems"> Add Work Item</a>
+                                    </div>
+                                    <div class="text-right col-4">
+                                        <input id="buat-awal-@otherCount" type="hidden" value="@item.WorkItemID" />
+                                        <a href="#exampleEdit" data-toggle="modal" data-id="@item.WorkItemID"
+                                           data-target="#exampleEdit" class="editWorkItems"> Set Dates</a>
+                                        <div class="date-class"></div>
+                                    </div>
+
+                                </div>
+
+
+
+                            </div>
+                            otherCount++;
+                        }
+                    }
+
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <h5> No data </h5>
+    }
+
+</section>
+
+
+<section id="modalEditWorkItem">
+    <div class="modal fade" id="exampleEdit" tabindex="-1" role="dialog" aria-labelledby="exampleEditLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h3 class="mb-3">Edit</h3>
+                    <p>Work Items</p>
+                    <form id="formAddWorkItem" enctype="multipart/form-data" method="post" onsubmit="return EditWork(this)">
+                        <input type="hidden" name="WorkItemID" id="WorkItemID" value="" />
+
+                        <div id="ProjectInput"></div>
+                        <div id="StateInput"></div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-form-label" for="WorkItemName">Title</label>
+                            <div id="NameInput" class="col-sm-12"></div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-form-label" for="WorkItemStartDate">Start Date</label>
+                            <div class="col-sm-12">
+                                <input type='date' id="WorkItemStartDate" name="WorkItemStartDate" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-form-label" for="WorkItemEndDate">End Date</label>
+                            <div class="col-sm-12">
+                                <input type='date' id="WorkItemEndDate" name="WorkItemEndDate" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="text-left mt-4">
+                            <button type="submit" class="btn btn-primary">Save and Close</button>
+                            <button type="button" class="btn btn-secondary pr-5 pl-5 closeModal" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section id="modalAddWorkItem">
+    <div class="modal fade" id="exampleAdd" tabindex="-1" role="dialog" aria-labelledby="exampleAddLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h3 class="mb-3">Add</h3>
+                    <p>Work Items</p>
+                    <form id="formAddWorkItem" enctype="multipart/form-data" method="post" onsubmit="return AddWork(this)">
+                        <input type="hidden" name="ProjectID" id="ProjectID" value="" />
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-form-label" for="WorkItemName">Title</label>
+                            <div id="WorkItemName" class="col-sm-12">
+                                <input type="text" class="form-control mt-2" id="WorkItemName" name="WorkItemName" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-form-label" for="WorkItemState">State</label>
+                            <div id="WorkItemState" class="col-sm-12">
+                                <select id="WorkItemState" name="WorkItemState" class="form-control mt-2">
+                                    <option selected>Choose...</option>
+                                    <option value="New">New</option>
+                                    <option value="In Process">In Process</option>
+                                    <option value="Done">Done</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="text-left mt-4">
+                            <button type="submit" class="btn btn-primary">Save and Close</button>
+                            <button type="button" class="btn btn-secondary pr-5 pl-5 closeModal" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+@section scripts {
+    <script class="user-page-script" src="~/Scripts/UserPage.js"></script>
+}

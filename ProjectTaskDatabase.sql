@@ -126,3 +126,22 @@ CREATE TABLE WorkItemTask
     ItemTaskState VARCHAR(255)
 
 )
+
+INSERT INTO WorkItems 
+VALUES (
+    1,
+    'Sprint 1',
+    'To Do',
+    '2020-01-11',
+    '2020-01-14'
+)
+
+INSERT INTO WorkItems
+VALUES
+    (
+        1,
+        'Sprint 2',
+        'To Do',
+        '2020-01-24',
+        '2020-01-26'
+)
