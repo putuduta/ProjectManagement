@@ -56,8 +56,9 @@
                                 @Html.DisplayFor(modelItem => item.UserStatus)
                             </td>
                             <td class=" text-center pr-5 pl-5">
+                                
                                 <a href="#exampleEdit" data-toggle="modal" data-id="@item.UserID"
-                                   data-target="#exampleEdit" class="addUser"> Edit</a>
+                                   data-target="#exampleEdit" class="addUser"><i class="fas fa-pen"></i> Edit</a>
                             </td>
                         </tr>
                     }
@@ -77,42 +78,44 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-body">
-                    <h3 class="mb-3">Edit</h3>
-                    <form id="formEditUser" enctype="multipart/form-data" method="post" onsubmit="return EditPost(this)">
-                        <input type="hidden" name="UserID" id="UserID" value="" />
-                        <div class="form-group row">
-                            <label class="col-sm-12 col-form-label" for="EditUsername">Username</label>
-                            <div id="UsernameInput" class="col-sm-12"></div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-12 col-form-label" for="EditUserPassword">Password</label>
-                            <div id="PasswordInput" class="col-sm-12"></div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-12 col-form-label" for="UserRoles">Roles</label>
-                            <div id="RolesInput" class="col-sm-12"></div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-12 col-form-label" for="UserPhoto">Photos</label>
-                            <div id="PhotoInput" class="ml-3"></div>
-                            <div class="col-sm-12 mt-3">
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input fileUpload-1" id="ImageUpload" name="ImageUpload">
-                                    <label class="custom-file-label" for="ImageUpload">Choose file</label>
+                    <div class="container mb-2">
+                        <h3 class="mb-3 text-primary">Edit</h3>
+                        <form id="formEditUser" enctype="multipart/form-data" method="post" onsubmit="return EditPost(this)">
+                            <input type="hidden" name="UserID" id="UserID" value="" />
+                            <div class="form-group row">
+                                <label class="col-sm-12 col-form-label" for="EditUsername">Username</label>
+                                <div id="UsernameInput" class="col-sm-12"></div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-12 col-form-label" for="EditUserPassword">Password</label>
+                                <div id="PasswordInput" class="col-sm-12"></div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-12 col-form-label" for="UserRoles">Roles</label>
+                                <div id="RolesInput" class="col-sm-12"></div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-12 col-form-label" for="UserPhoto">Photos</label>
+                                <div id="PhotoInput" class="ml-3"></div>
+                                <div class="col-sm-12 mt-3">
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input fileUpload-1" id="ImageUpload" name="ImageUpload">
+                                        <label class="custom-file-label" for="ImageUpload">Choose file</label>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-12 col-form-label" for="UserStatus">Status</label>
-                            <div class="col-sm-12">
-                                <div id="StatusInput" class="custom-control custom-checkbox"></div>
+                            <div class="form-group row">
+                                <label class="col-sm-12 col-form-label" for="UserStatus">Status</label>
+                                <div class="col-sm-12">
+                                    <div id="StatusInput" class="custom-control custom-checkbox"></div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="text-left mt-4">
-                            <button type="submit" class="btn btn-primary">Save and Close</button>
-                            <button type="button" class="btn btn-secondary pr-5 pl-5 closeModal" data-dismiss="modal">Cancel</button>
-                        </div>
-                    </form>
+                            <div class="text-left mt-4">
+                                <button type="submit" class="btn btn-primary">Save and Close</button>
+                                <button type="button" class="btn btn-secondary pr-5 pl-5 closeModal" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -124,54 +127,56 @@
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content">
                 <div class="modal-body">
-                    <h3>Add</h3>
-                    <h6>New User</h6>
-                    <form id="formAddUser" enctype="multipart/form-data" method="post" onsubmit="return AjaxPost(this)">
-                        <div class="form-group row">
-                            <label class="col-sm-12 col-form-label" for="Username">Username</label>
-                            <div class="col-sm-12">
-                                <input type="text" class="form-control mt-2" id="Username" name="Username" required>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-12 col-form-label" for="UserPassword">Password</label>
-                            <div class="col-sm-12">
-                                <input type="password" class="form-control mt-2" id="UserPassword" name="UserPassword" required>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-12 col-form-label" for="UserRoles">Roles</label>
-                            <div class="col-sm-12">
-                                <select id="UserRoles" name="UserRoles" class="form-control mt-2">
-                                    <option selected>Choose...</option>
-                                    <option value="Admin">Admin</option>
-                                    <option value="User">User</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-12 col-form-label" for="UserPhoto">Photos</label>
-                            <div class="col-sm-12 mt-2">
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input fileUpload-2" id="ImageUpload" name="ImageUpload">
-                                    <label class="custom-file-label" for="ImageUpload">Choose file</label>
+                    <div class="container mb-2">
+                        <h3 class="text-primary">Add</h3>
+                        <h6>New User</h6>
+                        <form id="formAddUser" enctype="multipart/form-data" method="post" onsubmit="return AjaxPost(this)">
+                            <div class="form-group row">
+                                <label class="col-sm-12 col-form-label" for="Username">Username</label>
+                                <div class="col-sm-12">
+                                    <input type="text" class="form-control mt-2" id="Username" name="Username" required>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-12 col-form-label" for="UserStatus">Status</label>
-                            <div class="col-sm-12">
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="edit-checkbox form-check-input" id="UserStatus" name="UserStatus" value="Active">
-                                    <label class="" for="UserStatus">Active</label>
+                            <div class="form-group row">
+                                <label class="col-sm-12 col-form-label" for="UserPassword">Password</label>
+                                <div class="col-sm-12">
+                                    <input type="password" class="form-control mt-2" id="UserPassword" name="UserPassword" required>
                                 </div>
                             </div>
-                        </div>
-                        <div class="text-left mt-3">
-                            <button type="submit" class="btn btn-primary">Save and Close</button>
-                            <button type="button" class="btn btn-secondary pr-5 pl-5 closeModal" data-dismiss="modal">Cancel</button>
-                        </div>
-                    </form>
+                            <div class="form-group row">
+                                <label class="col-sm-12 col-form-label" for="UserRoles">Roles</label>
+                                <div class="col-sm-12">
+                                    <select id="UserRoles" name="UserRoles" class="form-control mt-2">
+                                        <option selected>Choose...</option>
+                                        <option value="Admin">Admin</option>
+                                        <option value="User">User</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-12 col-form-label" for="UserPhoto">Photos</label>
+                                <div class="col-sm-12 mt-2">
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input fileUpload-2" id="ImageUpload" name="ImageUpload">
+                                        <label class="custom-file-label" for="ImageUpload">Choose file</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-12 col-form-label" for="UserStatus">Status</label>
+                                <div class="col-sm-12">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="edit-checkbox form-check-input" id="UserStatus" name="UserStatus" value="Active">
+                                        <label class="" for="UserStatus">Active</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-left mt-3">
+                                <button type="submit" class="btn btn-primary">Save and Close</button>
+                                <button type="button" class="btn btn-secondary pr-5 pl-5 closeModal" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

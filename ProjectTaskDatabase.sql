@@ -7,7 +7,9 @@ CREATE TABLE MsUser
     UserID INT PRIMARY KEY IDENTITY(1, 1),
     Username VARCHAR(255),
     UserPassword VARCHAR(10),
-    UserRoles VARCHAR(255) CHECK(UserRoles = 'Admin' OR UserRoles = 'User')
+    UserRoles VARCHAR(255) CHECK(UserRoles = 'Admin' OR UserRoles = 'User'),
+    UserPhoto VARCHAR (255),
+    UserStatus VARCHAR (255)
 )
 
 CREATE TABLE MsProject
@@ -89,22 +91,18 @@ VALUES
 )
 
 
-DELETE
-FROM HeaderProject
+
 
 EXEC sp_getUserAuth 'Putud', 'HelloWorld'
 
-DROP Table HeaderProject
 
-DRop Table MsUser
 
 SELECT @@SERVERNAME
 
 SELECT *
 FROM HeaderProject
 
-ALTER TABLE MsUser
-ADD UserPhoto VARCHAR (255), UserStatus VARCHAR (255)
+
 
 CREATE TABLE WorkItems
 (
@@ -148,11 +146,3 @@ VALUES
 
 SELECT *
 FROM WorkItems
-
-UPDATE WorkItems
-    SET ProjectID = 1
-WHERE WorkItemID = 2
-
-DELETE
-FROM WorkItems
-WHERE WorkItemID = 8

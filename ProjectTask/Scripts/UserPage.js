@@ -10,8 +10,8 @@ function getWorkDate(id) {
         success: function (result) {
 
             $('.date-class').append(`
-                        <p>${parseJsonDate(result.WorkItemStartDate)} - ${parseJsonDate(result.WorkItemEndDate)}</p>
-                      `);
+                <p>${parseJsonDate(result.WorkItemStartDate)} - ${parseJsonDate(result.WorkItemEndDate)}</p>
+             `);
         },
         error: function (err) {
             console.log(err);
